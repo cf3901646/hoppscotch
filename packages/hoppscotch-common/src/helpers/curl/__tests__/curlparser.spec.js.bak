@@ -1076,38 +1076,6 @@ data2: {"type":"test2","typeId":"123"}`,
       responses: {},
     }),
   },
-  {
-    command: "curl -I https://echo.hoppscotch.io/",
-    response: makeRESTRequest({
-      method: "HEAD",
-      name: "Untitled",
-      endpoint: "https://echo.hoppscotch.io/",
-      auth: { authType: "inherit", authActive: true },
-      headers: [],
-      body: { contentType: null, body: null },
-      params: [],
-      preRequestScript: "",
-      testScript: "",
-      requestVariables: [],
-      responses: {},
-    }),
-  },
-  {
-    command: "curl --head --http2 -4 https://echo.hoppscotch.io/",
-    response: makeRESTRequest({
-      method: "HEAD",
-      name: "Untitled",
-      endpoint: "https://echo.hoppscotch.io/",
-      auth: { authType: "inherit", authActive: true },
-      headers: [],
-      body: { contentType: null, body: null },
-      params: [],
-      preRequestScript: "",
-      testScript: "",
-      requestVariables: [],
-      responses: {},
-    }),
-  },
 ]
 
 describe("Parse curl command to Hopp REST Request", () => {
