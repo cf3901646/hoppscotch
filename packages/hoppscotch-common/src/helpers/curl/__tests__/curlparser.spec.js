@@ -823,6 +823,32 @@ const samples = [
     }),
   },
   {
+    command: `curl --get -d "platform=hoppscotch" https://example.org`,
+    response: makeRESTRequest({
+      name: "Untitled",
+      endpoint: "https://example.org/",
+      method: "GET",
+      auth: { authType: "inherit", authActive: true },
+      headers: [],
+      body: {
+        contentType: null,
+        body: null,
+      },
+      params: [
+        {
+          active: true,
+          key: "platform",
+          value: "hoppscotch",
+          description: "",
+        },
+      ],
+      preRequestScript: "",
+      testScript: "",
+      requestVariables: [],
+      responses: {},
+    }),
+  },
+  {
     command: `curl google.com -u userx`,
     response: makeRESTRequest({
       method: "GET",
