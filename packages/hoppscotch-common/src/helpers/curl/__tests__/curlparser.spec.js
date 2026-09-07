@@ -1281,6 +1281,23 @@ describe("Parse curl command to Hopp REST Request", () => {
     expect(JSON.parse(actual.body.body)).toEqual({ foo: "bar" })
   })
 
+  test("parses double-quoted URL and preserves RFC 3986 pipe and curly braces", () => {
+    const command = `curl "https://example.com/api?filter={id}|all"`
+
+    const actual = parseCurlToHoppRESTReq(command)
+
+    expect(actual.method).toBe("GET")
+    expect(actual.endpoint).toBe("https://example.com/api")
+    expect(actual.params).toEqual([
+      {
+        active: true,
+        key: "filter",
+        value: "{id}|all",
+        description: "",
+      },
+    ])
+  })
+
   for (const [i, { command, response }] of samples.entries()) {
     test(`for sample #${i + 1}:\n\n${command}`, () => {
       const actual = parseCurlToHoppRESTReq(command)
