@@ -1260,6 +1260,27 @@ describe("Parse curl command to Hopp REST Request", () => {
     expect(customHeader.value).toBe(`-d {"fake":1}`)
   })
 
+  test("does not corrupt body data containing space dash letter equals (e.g. -q=value)", () => {
+    const command = `curl 'https://example.com/api' -d '{"filter": "field -q=value"}'`
+
+    const actual = parseCurlToHoppRESTReq(command)
+
+    expect(actual.method).toBe("POST")
+    expect(actual.endpoint).toBe("https://example.com/api")
+    expect(actual.body.contentType).toBe("application/json")
+    expect(JSON.parse(actual.body.body)).toEqual({ filter: "field -q=value" })
+  })
+
+  test("normalizes short options with equals followed by quotes", () => {
+    const command = `curl 'https://example.com/api' -H='Content-Type: application/json' -d='{"foo": "bar"}'`
+
+    const actual = parseCurlToHoppRESTReq(command)
+
+    expect(actual.method).toBe("POST")
+    expect(actual.body.contentType).toBe("application/json")
+    expect(JSON.parse(actual.body.body)).toEqual({ foo: "bar" })
+  })
+
   for (const [i, { command, response }] of samples.entries()) {
     test(`for sample #${i + 1}:\n\n${command}`, () => {
       const actual = parseCurlToHoppRESTReq(command)

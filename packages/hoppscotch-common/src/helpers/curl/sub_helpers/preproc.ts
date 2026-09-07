@@ -22,7 +22,7 @@ const paperCuts = flow(
   S.replace(/\n/g, " "),
   S.replace(/(^|\s|=)\$'/g, "$1'"),
   S.replace(/(^|\s|=)\$"/g, '$1"'),
-  S.replace(/ -([a-zA-Z])=/g, " -$1 "),
+  S.replace(/(^|\s)-([a-zA-Z])=(?=['"])/g, "$1-$2 "),
   S.trim
 )
 
